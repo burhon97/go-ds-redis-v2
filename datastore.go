@@ -139,8 +139,7 @@ func (ds *Datastore) Query(ctx context.Context, q dsq.Query) (dsq.Results, error
 		prefix = prefix + "/"
 	}
 
-	var i redis.ScanIterator
-
+	i := ds.client.Scan(ctx, 0, "", 0).Iterator()
 	next := i.Next(ctx)
 	if len(q.Orders) > 0 {
 		switch q.Orders[0].(type) {
